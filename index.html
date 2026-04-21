@@ -27,7 +27,6 @@ body {
   border-radius:10px;
   cursor:pointer;
 }
-
 #skipBtn { right:20px; }
 #musicBtn { left:20px; }
 
@@ -72,7 +71,6 @@ button {
   color:white;
   cursor:pointer;
 }
-
 button:hover { transform:scale(1.1); }
 
 /* GAME */
@@ -98,7 +96,6 @@ button:hover { transform:scale(1.1); }
   height:8px;
   animation:fall linear forwards;
 }
-
 @keyframes fall {
   to {
     transform:translateY(100vh) rotate(720deg);
@@ -150,7 +147,7 @@ button:hover { transform:scale(1.1); }
   <p id="scoreText">Score: 0</p>
 </div>
 
-<!-- 🎉 BIRTHDAY SLIDE -->
+<!-- BIRTHDAY -->
 <div id="birthday" class="section">
   <h1>🎉 Happy Birthday 🎂</h1>
   <p style="font-size:22px; max-width:600px; margin:auto;">
@@ -166,6 +163,10 @@ button:hover { transform:scale(1.1); }
 <div id="final" class="section">
   <h1>🎉 Finale 😂</h1>
   <p>You completed the show 😌</p>
+
+  <!-- ✨ Typing Message -->
+  <p id="finalMessage" style="font-size:22px; max-width:700px; margin:auto; line-height:1.6;"></p>
+
   <h2>Gift: Lifetime friendship + nonsense 😂💖</h2>
   <div id="countdown"></div>
 </div>
@@ -215,7 +216,7 @@ function goMain(){
   typeEffect();
 }
 
-// TEXT
+// TYPE INTRO TEXT
 let msg="Starring: Chikuu 😂 | Drama Queen 👑 | Best Friend 💖 | Certified Pagal 🤪";
 let i=0;
 
@@ -275,20 +276,48 @@ function updateScore(){
   scoreText.innerText="Score: "+score;
 }
 
-// 🎉 BIRTHDAY FLOW
+// BIRTHDAY FLOW
 function showBirthday(){
   game.style.display="none";
   birthday.style.display="block";
 }
 
+// FINAL MESSAGE TEXT
+let finalText = `Hi Naaviiya, I know we have been through a lot in these past few years, 
+but yet here we are talking to each other like nothing happened… and this 
+is not bad, it is just our way to not be detached from each other.
+
+I will always care for you and love you no matter what. 💖
+
+Happy birthday Chikuuu 🥳
+May Nadarsh be healthy and fine :)
+
+And at last… theeessss sisterrrrr 😂💞`;
+
+let finalIndex = 0;
+
+function typeFinalMessage(){
+  if(finalIndex < finalText.length){
+    finalMessage.innerHTML += finalText.charAt(finalIndex);
+    finalIndex++;
+    setTimeout(typeFinalMessage, 35);
+  }
+}
+
 function goFinal(){
   birthday.style.display="none";
   final.style.display="block";
+
   startConfetti();
   startCountdown();
+
+  finalMessage.innerHTML="";
+  finalIndex=0;
+
+  setTimeout(typeFinalMessage, 500);
 }
 
-// FINAL
+// FINAL EFFECTS
 function startCountdown(){
   let count=5;
 
