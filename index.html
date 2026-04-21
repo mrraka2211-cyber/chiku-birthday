@@ -16,7 +16,6 @@ body {
   overflow:hidden;
 }
 
-/* BUTTONS */
 #skipBtn, #musicBtn {
   position:absolute;
   top:20px;
@@ -30,7 +29,6 @@ body {
 #skipBtn { right:20px; }
 #musicBtn { left:20px; }
 
-/* INTRO */
 #introScreen {
   height:100vh;
   display:flex;
@@ -52,15 +50,18 @@ body {
 }
 
 #chikuuImg {
-  width:150px;
+  width:180px;
+  height:180px;
+  object-fit:cover;
   border-radius:50%;
   margin-top:20px;
   opacity:0;
   transform:translateY(20px);
   transition:1s;
+  border:4px solid white;
+  box-shadow:0 0 25px rgba(255,0,0,0.6);
 }
 
-/* MAIN */
 .section { display:none; padding:40px; }
 
 button {
@@ -73,7 +74,6 @@ button {
 }
 button:hover { transform:scale(1.1); }
 
-/* GAME */
 #gameArea {
   height:70vh;
   position:relative;
@@ -89,7 +89,6 @@ button:hover { transform:scale(1.1); }
   cursor:pointer;
 }
 
-/* CONFETTI */
 .confetti {
   position:fixed;
   width:8px;
@@ -97,12 +96,9 @@ button:hover { transform:scale(1.1); }
   animation:fall linear forwards;
 }
 @keyframes fall {
-  to {
-    transform:translateY(100vh) rotate(720deg);
-  }
+  to { transform:translateY(100vh) rotate(720deg); }
 }
 
-/* SECRET */
 #secretBox {
   position:fixed;
   top:0; left:0;
@@ -130,7 +126,7 @@ button:hover { transform:scale(1.1); }
 <!-- INTRO -->
 <div id="introScreen">
   <div id="logo" onclick="secretClick()">CHIKUU</div>
-  <img id="chikuuImg" src="https://drive.google.com/uc?export=view&id=1Cl9zP7v2DTaNgjhQ8tWIRs9pSkw_p4x7">
+  <img id="chikuuImg" src="photo.jpg.jpeg">
 </div>
 
 <!-- MAIN -->
@@ -164,7 +160,6 @@ button:hover { transform:scale(1.1); }
   <h1>🎉 Finale 😂</h1>
   <p>You completed the show 😌</p>
 
-  <!-- ✨ Typing Message -->
   <p id="finalMessage" style="font-size:22px; max-width:700px; margin:auto; line-height:1.6;"></p>
 
   <h2>Gift: Lifetime friendship + nonsense 😂💖</h2>
@@ -187,42 +182,42 @@ const bgMusic = document.getElementById("bgMusic");
 function toggleMusic(){
   if(musicPlaying){
     bgMusic.pause();
-    musicBtn.innerText = "🔇 Music Off";
+    document.getElementById("musicBtn").innerText="🔇 Music Off";
   } else {
     bgMusic.play();
-    musicBtn.innerText = "🔊 Music On";
+    document.getElementById("musicBtn").innerText="🔊 Music On";
   }
-  musicPlaying = !musicPlaying;
+  musicPlaying=!musicPlaying;
 }
 
 document.body.addEventListener("click", ()=>{
   if(!musicPlaying){
     bgMusic.play();
-    musicPlaying = true;
-    musicBtn.innerText = "🔊 Music On";
+    musicPlaying=true;
+    document.getElementById("musicBtn").innerText="🔊 Music On";
   }
-}, {once:true});
+},{once:true});
 
 // INTRO
-window.onload = ()=>{
-  setTimeout(()=>logo.style.opacity=1,300);
-  setTimeout(()=>chikuuImg.style.opacity=1,800);
+window.onload=()=>{
+  setTimeout(()=>document.getElementById("logo").style.opacity=1,300);
+  setTimeout(()=>document.getElementById("chikuuImg").style.opacity=1,800);
   setTimeout(goMain,3000);
 };
 
 function goMain(){
-  introScreen.style.display="none";
-  main.style.display="block";
+  document.getElementById("introScreen").style.display="none";
+  document.getElementById("main").style.display="block";
   typeEffect();
 }
 
-// TYPE INTRO TEXT
+// TEXT
 let msg="Starring: Chikuu 😂 | Drama Queen 👑 | Best Friend 💖 | Certified Pagal 🤪";
 let i=0;
 
 function typeEffect(){
   if(i<msg.length){
-    typed.innerHTML+=msg.charAt(i);
+    document.getElementById("typed").innerHTML+=msg.charAt(i);
     i++;
     setTimeout(typeEffect,30);
   }
@@ -232,8 +227,8 @@ function typeEffect(){
 let score=0;
 
 function startGame(){
-  main.style.display="none";
-  game.style.display="block";
+  document.getElementById("main").style.display="none";
+  document.getElementById("game").style.display="block";
   score=0;
   updateScore();
   for(let i=0;i<3;i++) createBalloon();
@@ -249,7 +244,6 @@ function createBalloon(){
 
   let rise=setInterval(()=>{
     b.style.top=(parseFloat(b.style.top)-speed)+"%";
-
     if(parseFloat(b.style.top)<-10){
       clearInterval(rise);
       b.remove();
@@ -269,22 +263,22 @@ function createBalloon(){
     }
   };
 
-  gameArea.appendChild(b);
+  document.getElementById("gameArea").appendChild(b);
 }
 
 function updateScore(){
-  scoreText.innerText="Score: "+score;
+  document.getElementById("scoreText").innerText="Score: "+score;
 }
 
-// BIRTHDAY FLOW
+// BIRTHDAY
 function showBirthday(){
-  game.style.display="none";
-  birthday.style.display="block";
+  document.getElementById("game").style.display="none";
+  document.getElementById("birthday").style.display="block";
 }
 
-// FINAL MESSAGE TEXT
-let finalText = `Hi Naaviiya, I know we have been through a lot in these past few years, 
-but yet here we are talking to each other like nothing happened… and this 
+// FINAL MESSAGE
+let finalText=`Hi Naaviiya, I know we have been through a lot in these past few years,
+but yet here we are talking to each other like nothing happened… and this
 is not bad, it is just our way to not be detached from each other.
 
 I will always care for you and love you no matter what. 💖
@@ -294,40 +288,39 @@ May Nadarsh be healthy and fine :)
 
 And at last… theeessss sisterrrrr 😂💞`;
 
-let finalIndex = 0;
+let finalIndex=0;
 
 function typeFinalMessage(){
-  if(finalIndex < finalText.length){
-    finalMessage.innerHTML += finalText.charAt(finalIndex);
+  let el=document.getElementById("finalMessage");
+  if(finalIndex<finalText.length){
+    el.innerHTML+=finalText.charAt(finalIndex);
     finalIndex++;
-    setTimeout(typeFinalMessage, 35);
+    setTimeout(typeFinalMessage,35);
   }
 }
 
 function goFinal(){
-  birthday.style.display="none";
-  final.style.display="block";
+  document.getElementById("birthday").style.display="none";
+  document.getElementById("final").style.display="block";
 
   startConfetti();
   startCountdown();
 
-  finalMessage.innerHTML="";
+  document.getElementById("finalMessage").innerHTML="";
   finalIndex=0;
 
-  setTimeout(typeFinalMessage, 500);
+  setTimeout(typeFinalMessage,500);
 }
 
 // FINAL EFFECTS
 function startCountdown(){
   let count=5;
-
   let timer=setInterval(()=>{
-    countdown.innerHTML="Next Episode in "+count+"...";
+    document.getElementById("countdown").innerHTML="Next Episode in "+count+"...";
     count--;
-
     if(count<0){
       clearInterval(timer);
-      countdown.innerHTML="😂 Just kidding!";
+      document.getElementById("countdown").innerHTML="😂 Just kidding!";
     }
   },1000);
 }
@@ -350,12 +343,12 @@ let clickCount=0;
 function secretClick(){
   clickCount++;
   if(clickCount===3){
-    secretBox.style.display="flex";
+    document.getElementById("secretBox").style.display="flex";
   }
 }
 
 function closeSecret(){
-  secretBox.style.display="none";
+  document.getElementById("secretBox").style.display="none";
 }
 
 </script>
