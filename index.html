@@ -133,8 +133,6 @@ button:hover { transform:scale(1.1); }
 <!-- INTRO -->
 <div id="introScreen">
   <div id="logo" onclick="secretClick()">CHIKUU</div>
-
-  <!-- ✅ YOUR IMAGE ADDED HERE -->
   <img id="chikuuImg" src="https://drive.google.com/uc?export=view&id=1Cl9zP7v2DTaNgjhQ8tWIRs9pSkw_p4x7">
 </div>
 
@@ -150,6 +148,18 @@ button:hover { transform:scale(1.1); }
   <h2>Episode 1: Balloon Battle 🎈</h2>
   <div id="gameArea"></div>
   <p id="scoreText">Score: 0</p>
+</div>
+
+<!-- 🎉 BIRTHDAY SLIDE -->
+<div id="birthday" class="section">
+  <h1>🎉 Happy Birthday 🎂</h1>
+  <p style="font-size:22px; max-width:600px; margin:auto;">
+    Happy Birthday to the most amazing, funny, and pagal person 😂💖  
+    Stay happy, stay crazy, and never change 😌✨  
+    This little show is just for you 🎬💝
+  </p>
+  <br>
+  <button onclick="goFinal()">Continue ▶️</button>
 </div>
 
 <!-- FINAL -->
@@ -252,7 +262,7 @@ function createBalloon(){
     updateScore();
 
     if(score>=10){
-      finale();
+      showBirthday();
     } else {
       createBalloon();
     }
@@ -265,14 +275,20 @@ function updateScore(){
   scoreText.innerText="Score: "+score;
 }
 
-// FINAL
-function finale(){
+// 🎉 BIRTHDAY FLOW
+function showBirthday(){
   game.style.display="none";
+  birthday.style.display="block";
+}
+
+function goFinal(){
+  birthday.style.display="none";
   final.style.display="block";
   startConfetti();
   startCountdown();
 }
 
+// FINAL
 function startCountdown(){
   let count=5;
 
